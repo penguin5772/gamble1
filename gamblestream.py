@@ -228,8 +228,11 @@ with tabs[1]:
     st.subheader(f"🏟️ 매치: {t1} vs {t2}")
     
     s_predict = st.radio("결과 예측", ["a. 왼쪽 승 (x2)", "b. 오른쪽 승 (x2)", "c. 무승부 (x4)"])
-    s_money = st.number_input("판돈 입력 (최소 200$)", min_value=200, max_value=max(200, st.session_state.base_money), value=min(200, st.session_state.base_money), key="sport_bet")
-    
+    s_min = 200
+    s_max = max(s_min, st.session_state.base_money)
+    s_val = max(s_min, min(s_min, st.session_state.base_money))
+
+    s_money = st.number_input("판돈 입력 (최소 200$)", min_value=s_min, max_value=s_max, value=s_min, key="sport_bet")
     if st.button("경기 진행하기", key="btn_sport"):
         if s_money > st.session_state.base_money:
             st.error("소지금이 부족합니다.")
@@ -279,8 +282,10 @@ with tabs[2]:
     horses = ["🔴🐎 적토마", "🟡🐎 코딱지", "🟢🐎 초록", "🔵🐎 파랑", "🟤🐎 똥", "⚫🐎 흑인"]
     
     selected_horse_idx = st.selectbox("베팅할 말을 선택하세요:", range(6), format_func=lambda x: horses[x])
-    h_money = st.number_input("판돈 입력 (최소 100$)", min_value=100, max_value=max(100, st.session_state.base_money), value=min(100, st.session_state.base_money), key="horse_bet")
-    
+    h_min = 100
+    h_max = max(h_min, st.session_state.base_money)
+
+    h_money = st.number_input("판돈 입력 (최소 100$)", min_value=h_min, max_value=h_max, value=h_min, key="horse_bet")
     if st.button("경주 시작!", key="btn_horse"):
         if h_money > st.session_state.base_money:
             st.error("소지금이 부족합니다.")
